@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { fetchNews } from '../../api/newsApi';
 import NewsItem from '../NewsItem/NewsItem';
 import { News } from '../../types/news';
@@ -15,28 +15,25 @@ const NewsList: React.FC<NewsListProps> = ({ searchQuery }) => {
 
   useEffect(() => {
     const getNews = async () => {
-      console.log('Fetching news started');
       setIsLoading(true);
       try {
-        const newsData = await fetchNews();
-        console.log('Fetched news data:', newsData);
+        const newsData: News[] = await fetchNews();
         setNews(newsData);
-      }
-      catch (error) {
+      } catch (error) {
         console.error('Error fetching news:', error);
-      }
-      finally {
+      } finally {
         setIsLoading(false);
-        console.log('Fetching news finished');
       }
     };
 
     getNews();
   }, []);
 
-  const filteredNews = news.filter(newsItem =>
-    newsItem.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredNews = useMemo(() => {
+    return news.filter(newsItem =>
+      newsItem.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [news, searchQuery]);
 
   if (isLoading) {
     return <Loading />;
