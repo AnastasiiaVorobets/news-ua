@@ -22,7 +22,8 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ newsItem }) => {
       const updatedSavedNews = savedNews.filter(savedItem => savedItem.url !== newsItem.url);
       localStorage.setItem('savedNews', JSON.stringify(updatedSavedNews));
       setIsSaved(false);
-    } else {
+    }
+    else {
       const updatedSavedNews = [...savedNews, newsItem];
       localStorage.setItem('savedNews', JSON.stringify(updatedSavedNews));
       setIsSaved(true);
