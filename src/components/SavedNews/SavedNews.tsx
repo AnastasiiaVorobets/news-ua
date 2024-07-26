@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import NewsItem from '../NewsItem/NewsItem';
 import { News } from '../../types/news';
 import './SavedNews.scss';
@@ -11,13 +11,17 @@ const SavedNews: React.FC<SavedNewsProps> = ({ searchQuery }) => {
   const [savedNews, setSavedNews] = useState<News[]>([]);
 
   useEffect(() => {
-    const savedNewsData = JSON.parse(localStorage.getItem('savedNews') || '[]');
-    setSavedNews(savedNewsData);
+    const savedNewsData = localStorage.getItem('savedNews');
+    if (savedNewsData) {
+      setSavedNews(JSON.parse(savedNewsData));
+    }
   }, []);
 
-  const filteredSavedNews = savedNews.filter(newsItem =>
-    newsItem.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredSavedNews = useMemo(() => {
+    return savedNews.filter(newsItem =>
+      newsItem.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [savedNews, searchQuery]);
 
   return (
     <div className="saved-news">
