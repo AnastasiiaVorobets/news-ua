@@ -1,0 +1,26 @@
+.tabs {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: #333;
+    background-color: #C9DABF;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &.active {
+      color: #fff;
+      background-color: #9CA986;
+    }
+
+    &:hover:not(.active) {
+      color: #fff;
+      background-color: #808D7C;
+    }
+  }
+}

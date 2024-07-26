@@ -1,0 +1,15 @@
+.saved-news {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
+}
+
+.no-saved-news {
+  margin-top: 20px;
+  font-size: 1.2em;
+  text-align: center;
+}
