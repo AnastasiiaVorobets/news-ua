@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import NewsItem from '../NewsItem/NewsItem';
 import { News } from '../../types/news';
+import { filterNews } from '../../utils/filterNews';
 import './SavedNews.scss';
 
 interface SavedNewsProps {
@@ -17,11 +18,7 @@ const SavedNews: React.FC<SavedNewsProps> = ({ searchQuery }) => {
     }
   }, []);
 
-  const filteredSavedNews = useMemo(() => {
-    return savedNews.filter(newsItem =>
-      newsItem.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [savedNews, searchQuery]);
+  const filteredSavedNews = useMemo(() => filterNews(savedNews, searchQuery), [savedNews, searchQuery]);
 
   return (
     <div className="saved-news">

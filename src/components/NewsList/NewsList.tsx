@@ -3,6 +3,7 @@ import { fetchNews } from '../../api/newsApi';
 import NewsItem from '../NewsItem/NewsItem';
 import { News } from '../../types/news';
 import Loading from '../Loading/Loading';
+import { filterNews } from '../../utils/filterNews';
 import './NewsList.scss';
 
 interface NewsListProps {
@@ -29,11 +30,7 @@ const NewsList: React.FC<NewsListProps> = ({ searchQuery }) => {
     getNews();
   }, []);
 
-  const filteredNews = useMemo(() => {
-    return news.filter(newsItem =>
-      newsItem.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [news, searchQuery]);
+  const filteredNews = useMemo(() => filterNews(news, searchQuery), [news, searchQuery]);
 
   if (isLoading) {
     return <Loading />;
